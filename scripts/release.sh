@@ -333,7 +333,7 @@ step "Build"
 rm -rf "$out_dir"
 mkdir -p "$out_dir"
 build_output="$(
-    scripts/build.sh --config release --universal --version "$version" --build "$build_number" \
+    scripts/build.sh --config release --version "$version" --build "$build_number" \
         --sign "$sign_identity" --output "$out_dir" --scratch-path "$scratch" | tee /dev/stderr
 )"
 app="$(printf '%s\n' "$build_output" | tail -n 1)"

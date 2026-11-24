@@ -8,7 +8,7 @@ A release ships three assets on a GitHub release `v<version>`:
 | `HerdrCoreBar-<version>.dmg` | Signed, notarized, stapled disk image for manual and Homebrew installs |
 | `appcast.xml` | Sparkle feed with the EdDSA signature, served from `releases/latest/download/appcast.xml` |
 
-`scripts/release.sh` does the whole job: preconditions, universal release build, notarization, DMG,
+`scripts/release.sh` does the whole job: preconditions, Apple silicon (arm64) release build, notarization, DMG,
 appcast, tag, GitHub release, and the Homebrew cask in `olohmann/homebrew-tap`. The same script runs
 locally and in `.github/workflows/release.yml`.
 
