@@ -64,6 +64,11 @@ final class HerdrAppController: TerminalFocusing {
         ["do", "agent.focus", "--terminal", address]
     }
 
+    /// `agent.focus` shows the agent; `pane.focus` also gives its terminal the keyboard.
+    static func paneFocusArguments(for address: String) -> [String] {
+        ["do", "pane.focus", "--terminal", address]
+    }
+
     /// nil when the command succeeded. herdr-app prints `{ "error": "..." }` and exits 1 on failure.
     static func failure(in result: CommandResult) -> FocusError? {
         let output = result.stdout.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -97,6 +102,8 @@ final class HerdrAppController: TerminalFocusing {
             try await activator.launchHerdr()
             attempts = Self.launchRetries
         }
+        // Activate first: a window that becomes key afterwards restores its old first responder.
+        activator.activateHerdr()
         var lastError = FocusError.timedOut
         for attempt in 0..<attempts {
             if attempt > 0 { await sleep(Self.launchRetryDelay) }
@@ -106,6 +113,12 @@ final class HerdrAppController: TerminalFocusing {
                 if let failure = Self.failure(in: result) {
                     lastError = failure
                     continue
+                }
+                if let paneResult = try? await runner.run(
+                    tool, arguments: Self.paneFocusArguments(for: terminal.address), timeout: Self.timeout),
+                    let failure = Self.failure(in: paneResult)
+                {
+                    log.info("pane.focus \(terminal.address, privacy: .public): \(failure.message, privacy: .public)")
                 }
                 activator.activateHerdr()
                 return

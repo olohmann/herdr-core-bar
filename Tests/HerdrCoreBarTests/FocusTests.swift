@@ -116,8 +116,12 @@ private final class FakeActivator: HerdrAppActivating {
         let runner = FakeRunner([ok()])
         let activator = FakeActivator(running: true)
         try await controller(runner, activator).focus(agent("mini/t7", .done))
-        #expect(runner.calls == [.init(executable: tool, arguments: ["do", "agent.focus", "--terminal", "mini/t7"])])
-        #expect(activator.activated == 1)
+        #expect(
+            runner.calls == [
+                .init(executable: tool, arguments: ["do", "agent.focus", "--terminal", "mini/t7"]),
+                .init(executable: tool, arguments: ["do", "pane.focus", "--terminal", "mini/t7"]),
+            ])
+        #expect(activator.activated == 2)
         #expect(activator.launched == 0)
     }
 
@@ -144,7 +148,7 @@ private final class FakeActivator: HerdrAppActivating {
             try await controller(runner, activator).focus(agent("t1", .working))
         }
         #expect(runner.calls.count == 1)
-        #expect(activator.activated == 0)
+        #expect(activator.activated == 1)
     }
 
     @Test func launchesHerdrAndRetriesUntilTheWindowIsUp() async throws {
@@ -154,8 +158,8 @@ private final class FakeActivator: HerdrAppActivating {
         let activator = FakeActivator(running: false)
         try await controller(runner, activator).focus(agent("t1", .working))
         #expect(activator.launched == 1)
-        #expect(runner.calls.count == 3)
-        #expect(activator.activated == 1)
+        #expect(runner.calls.count == 4)
+        #expect(activator.activated == 2)
     }
 
     @Test func missingToolIsReported() async {
