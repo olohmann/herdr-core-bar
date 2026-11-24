@@ -1,0 +1,38 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.20000,0.25500,0.43000,1.00000",
+      "display-p3:0.06500,0.08000,0.15500,1.00000"
+    ],
+    "orientation" : {
+      "start" : { "x" : 0.5, "y" : 0.0 },
+      "stop" : { "x" : 0.5, "y" : 1.0 }
+    }
+  },
+  "groups" : [
+    {
+      "layers" : [
+        { "image-name" : "glyphs.svg", "name" : "glyphs", "glass" : false },
+        { "image-name" : "dot-blocked.svg", "name" : "dot-blocked", "glass" : true },
+        { "image-name" : "dot-working.svg", "name" : "dot-working", "glass" : true },
+        { "image-name" : "dot-done.svg", "name" : "dot-done", "glass" : true }
+      ],
+      "lighting" : "individual",
+      "shadow" : { "kind" : "layer-color", "opacity" : 0.5 },
+      "specular" : true,
+      "translucency" : { "enabled" : true, "value" : 0.25 }
+    },
+    {
+      "layers" : [
+        { "image-name" : "menubar-item.svg", "name" : "menubar-item", "glass" : false },
+        { "image-name" : "menubar.svg", "name" : "menubar", "glass" : true, "opacity" : 0.9 }
+      ],
+      "shadow" : { "kind" : "neutral", "opacity" : 0.4 },
+      "specular" : true,
+      "translucency" : { "enabled" : true, "value" : 0.4 }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : [ "macOS" ]
+  }
+}

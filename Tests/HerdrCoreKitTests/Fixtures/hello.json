@@ -1,0 +1,1 @@
+{"core":{"id":"c0ffee00","name":"examplehost"},"features":["events","labels"],"framed":false,"generation":1,"keeps_running_after_logout":true,"login_session":{"gui":true,"id":7,"user":501},"logout_linger_user":null,"methods":["hello","events.subscribe","terminal.list","terminal.label"],"version":"9.9.9","future_field":{"nested":[1,2,3]}}

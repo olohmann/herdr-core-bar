@@ -35,7 +35,7 @@
 	<key>SUFeedURL</key>
 	<string>https://github.com/olohmann/herdr-core-bar/releases/latest/download/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>__SPARKLE_PUBLIC_ED_KEY__</string>
+	<string>kbZh3jcegKwZCOGo1jeTPzZm4vkSehGYkmIVbN1abck=</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUScheduledCheckInterval</key>

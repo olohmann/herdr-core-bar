@@ -1,0 +1,15 @@
+{"jsonrpc":"2.0","method":"event","params":{"data":{"address":"t9","argv":["sh","-c","echo hi"],"cols":200,"created_ms":1700000010000,"cwd":"/home/sample/projects/zeta","die_with_parent":false,"exit_code":null,"finished_ms":null,"identity":"example","keep":false,"labels":{},"name":"probe","notify":true,"parent":null,"pid":5001,"reason":null,"reported":false,"rm":false,"rows":50,"screen":"exact","signal":null,"state":"live","status":null,"status_ms":null,"template":null,"title":"","turn":0},"seq":101,"terminal":"t9","type":"created"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"labels":{"herdr.seen":"1","where":"Zeta / 3"}},"seq":102,"terminal":"t9","type":"labels"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"argv":["sh","-c","echo hi"],"cwd":"/home/sample/projects/zeta","name":"sh","pid":5001},"seq":103,"terminal":"t9","type":"foreground"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"records":{},"reported":true,"status":{"app":"probe","kind":"question","msg":"which one?","state":"blocked"}},"seq":104,"terminal":"t9","type":"status"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"state":"blocked","turn":2},"seq":105,"terminal":"t9","type":"turn"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"title":"Pick a color"},"seq":106,"terminal":"t9","type":"title"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"records":{},"reported":true,"status":null},"seq":107,"terminal":"t9","type":"status"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"exit_code":3,"finished_ms":1700000020000,"reason":"exited","signal":null},"seq":108,"terminal":"t9","type":"finished"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{},"seq":109,"terminal":"t9","type":"removed"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{},"seq":110,"terminal":"devbox/t4","type":"lost"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{},"seq":111,"terminal":"devbox/t4","type":"restarted"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"cols":90,"rows":30},"seq":112,"terminal":"t1","type":"size"}}
+{"jsonrpc":"2.0","method":"event","params":{"data":{"records":{},"reported":true,"status":{"app":"agentz","state":"done"}},"seq":113,"terminal":"devbox/t4","type":"status"}}
+{"jsonrpc":"2.0","method":"heartbeat","params":{"seq":113}}
+{"jsonrpc":"2.0","method":"brand.new.notification","params":{"x":1}}
