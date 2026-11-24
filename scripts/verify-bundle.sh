@@ -7,20 +7,23 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
 
 usage() {
     cat <<EOF
-Usage: scripts/verify-bundle.sh <path/to/Herdr Core Bar.app> [--distribution] [--require-universal]
+Usage: scripts/verify-bundle.sh <path/to/Herdr Core Bar.app> [--signed | --distribution] [--require-universal]
 
-  --distribution       Also require Developer ID signing (team $TEAM_ID), hardened runtime,
-                       secure timestamp, Gatekeeper acceptance and a stapled notarization ticket.
+  --signed             Also require Developer ID signing (team $TEAM_ID), hardened runtime and a
+                       secure timestamp on the app and every Sparkle component (before notarization).
+  --distribution       --signed, plus Gatekeeper acceptance and a stapled notarization ticket.
   --require-universal  Fail unless the executable contains both arm64 and x86_64.
 EOF
 }
 
 app=""
+signed=0
 distribution=0
 require_universal=0
 while (($#)); do
     case "$1" in
-    --distribution) distribution=1; shift ;;
+    --signed) signed=1; shift ;;
+    --distribution) signed=1; distribution=1; shift ;;
     --require-universal) require_universal=1; shift ;;
     -h | --help) usage; exit 0 ;;
     -*) die "unknown option: $1 (see --help)" ;;
@@ -141,8 +144,8 @@ else
     codesign --verify --deep --strict --verbose=2 "$app" 2>&1 | sed 's/^/      /' >&2 || true
 fi
 
-if ((distribution)); then
-    log "Distribution"
+if ((signed)); then
+    log "Developer ID signature"
     for item in "${sparkle_parts[@]}" "$app"; do
         name="${item#"$app/"}"
         [[ "$item" == "$app" ]] && name="$(basename "$app")"
@@ -164,7 +167,10 @@ if ((distribution)); then
             fail "$name: no secure timestamp"
         fi
     done
+fi
 
+if ((distribution)); then
+    log "Distribution"
     if spctl_out="$(spctl -a -t exec -vv "$app" 2>&1)"; then
         ok "spctl: $(tr '\n' ' ' <<<"$spctl_out")"
     else

@@ -343,7 +343,7 @@ app="$(printf '%s\n' "$build_output" | tail -n 1)"
 if ((dry_run)); then
     scripts/verify-bundle.sh "$app"
 else
-    scripts/verify-bundle.sh "$app" --distribution
+    scripts/verify-bundle.sh "$app" --signed
     signature_info=$'\n'"$(codesign -dvv "$app" 2>&1)"$'\n'
     [[ "$signature_info" == *$'\n'"TeamIdentifier=$TEAM_ID"$'\n'* ]] || die "app is not signed by team $TEAM_ID"
 fi
@@ -375,6 +375,7 @@ ditto -c -k --sequesterRsrc --keepParent "$app" "$notarize_zip"
 notarize "$notarize_zip"
 staple "$app"
 gatekeeper_check --assess --type execute -vv "$app"
+((dry_run)) || scripts/verify-bundle.sh "$app" --distribution
 ditto -c -k --sequesterRsrc --keepParent "$app" "$zip"
 log "Update archive: $zip"
 
