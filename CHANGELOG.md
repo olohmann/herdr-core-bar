@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-25
+
+### Changed
+
+- The popover header and About tab show the real app icon instead of a stand-in symbol.
+- The menu bar item uses a new glyph taken from the app icon, a menu bar strip above three status dots,
+  replacing the generic hexagon grid.
+
 ## [0.1.0] - 2026-11-24
 
 Initial release.
@@ -22,5 +30,6 @@ Initial release.
 - Agents-only filter that hides plain shells.
 - Automatic updates through Sparkle, signed with EdDSA.
 
-[Unreleased]: https://github.com/olohmann/herdr-core-bar/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/olohmann/herdr-core-bar/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/olohmann/herdr-core-bar/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/olohmann/herdr-core-bar/releases/tag/v0.1.0

@@ -1,3 +1,4 @@
+import AppKit
 import HerdrCoreKit
 import SwiftUI
 
@@ -8,7 +9,7 @@ struct HeaderView: View {
     var onReconnect: () -> Void = {}
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             AppGlyph()
             VStack(alignment: .leading, spacing: 1) {
                 Text("Herdr Core Bar")
@@ -40,28 +41,61 @@ struct HeaderView: View {
     }
 }
 
-/// A small rendition of the app icon.
+/// The app icon. Unbundled runs (`swift run`, tests) get a drawn stand-in instead of the generic icon.
 struct AppGlyph: View {
     @ScaledMetric private var size: CGFloat
 
-    init(size: CGFloat = 26) {
+    init(size: CGFloat = 32) {
         _size = ScaledMetric(wrappedValue: size, relativeTo: .headline)
     }
 
     var body: some View {
-        RoundedRectangle(cornerRadius: size * 0.28, style: .continuous)
-            .fill(
-                LinearGradient(
-                    colors: [Color(red: 0.20, green: 0.26, blue: 0.43), Color(red: 0.07, green: 0.08, blue: 0.16)],
-                    startPoint: .top, endPoint: .bottom)
-            )
-            .overlay {
-                Image(systemName: Theme.baseSymbol)
-                    .font(.system(size: size * 0.5, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.92))
+        Group {
+            if let icon = Self.bundleIcon {
+                Image(nsImage: icon)
+                    .resizable()
+                    .interpolation(.high)
+            } else {
+                DrawnAppIcon()
             }
-            .frame(width: size, height: size)
-            .accessibilityHidden(true)
+        }
+        .frame(width: size, height: size)
+        .accessibilityHidden(true)
+    }
+
+    /// Read from the bundle rather than `NSWorkspace`, which puts `--render-preview` renders in an inactive, dimmed state.
+    private static let bundleIcon: NSImage? =
+        AppBundle.isProperBundle ? Bundle.main.image(forResource: "AppIcon") : nil
+}
+
+/// A simplified copy of the app icon: indigo tile, menu bar strip, three status dots.
+struct DrawnAppIcon: View {
+    var body: some View {
+        GeometryReader { proxy in
+            let side = min(proxy.size.width, proxy.size.height)
+            // The icon art sits inside an 80 % safe area, like macOS app icons.
+            let tile = side * 0.82
+            RoundedRectangle(cornerRadius: tile * 0.225, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Color(red: 0.20, green: 0.25, blue: 0.43), Color(red: 0.07, green: 0.08, blue: 0.16)],
+                        startPoint: .top, endPoint: .bottom)
+                )
+                .overlay {
+                    VStack(spacing: tile * 0.14) {
+                        Capsule()
+                            .fill(.white.opacity(0.88))
+                            .frame(width: tile * 0.66, height: tile * 0.11)
+                        HStack(spacing: tile * 0.05) {
+                            ForEach([Theme.blocked, Theme.working, Theme.done], id: \.self) { color in
+                                Circle().fill(color).frame(width: tile * 0.19, height: tile * 0.19)
+                            }
+                        }
+                    }
+                }
+                .frame(width: tile, height: tile)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
     }
 }
 

@@ -38,14 +38,7 @@ struct UpdatesSettingsView: View {
 struct AboutSettingsView: View {
     var body: some View {
         VStack(spacing: 12) {
-            if AppBundle.isProperBundle {
-                Image(nsImage: NSApp.applicationIconImage)
-                    .resizable()
-                    .frame(width: 96, height: 96)
-                    .accessibilityHidden(true)
-            } else {
-                AppGlyph(size: 80).padding(8)
-            }
+            AppGlyph(size: 96)
             VStack(spacing: 4) {
                 Text("Herdr Core Bar")
                     .font(.title2.weight(.semibold))

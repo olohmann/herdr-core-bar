@@ -11,7 +11,6 @@ enum Theme {
     static let popoverWidth: CGFloat = 380
     static let popoverMaxHeight: CGFloat = 560
     static let rowCorner: CGFloat = 8
-    static let baseSymbol = "circle.hexagongrid.fill"
 
     static let blocked = Color.orange
     static let error = Color.red

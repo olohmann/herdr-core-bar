@@ -37,8 +37,7 @@ struct MenuBarGlyph: View {
     var body: some View {
         HStack(spacing: 5) {
             ZStack {
-                Image(systemName: Theme.baseSymbol)
-                    .font(.system(size: 14, weight: .medium))
+                BrandMark()
                     .opacity(content.isOffline ? 0.4 : 1)
                 if content.isOffline {
                     Capsule()
@@ -75,6 +74,23 @@ struct MenuBarGlyph: View {
                 .font(.system(size: 13, weight: weight))
                 .monospacedDigit()
         }
+    }
+}
+
+/// The app icon's motif in one color: the menu bar strip above three status dots.
+struct BrandMark: View {
+    var body: some View {
+        VStack(spacing: 3) {
+            Capsule()
+                .frame(width: 16, height: 3)
+            HStack(spacing: 1.5) {
+                ForEach(0..<3, id: \.self) { _ in
+                    Circle().frame(width: 4.5, height: 4.5)
+                }
+            }
+        }
+        .frame(width: 18, height: 18)
+        .accessibilityHidden(true)
     }
 }
 
